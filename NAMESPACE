@@ -1,15 +1,21 @@
-# Default NAMESPACE created by R
-# Remove the previous line if you edit this file
-
 # Export all names
 exportPattern(".")
 
-# Import all packages listed as Imports or Depends
+importFrom("graphics", par, plot, mosaicplot)
+## importFrom("stats", ..........)
+## importFrom("utils", ..........)
+
+importFrom("grid", gpar)# not really, but 'vcd' *depends* on grid, so we must too and hence import..
+importFrom("lattice", xyplot, equal.count)
+importFrom("MASS", parcoord)
+importFrom("mi", ## no longer in 'mi': data.mi, m,
+           ## instead of mi.data.frame():
+           missing_data.frame)
+importFrom("mice", mice, complete, lm.mids)
+importFrom("VIM", marginplot)
+importFrom("vcd", mosaic)
+
+## TODO: importFrom(....)
 import(
-  VIM,
-  mi,
-  mice,
-  Amelia,
-  lattice,
-  vcd
+  Amelia
 )

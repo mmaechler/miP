@@ -1,14 +1,20 @@
 Package: miP
-Type: Package
 Title: Multiple Imputation Plots
-Version: 1.1-1
-Date: 2015-11-06
-Author: Paul Brix
-Maintainer: Paul Brix <brixpaul@googlemail.com>
-Depends: R(>= 2.10.0), VIM, mi, mice, Amelia, lattice, vcd
+Version: 1.2-0
+Date: 2015-11-03
+Author: Paul Brix <brixpaul@googlemail.com>
+Maintainer: Martin Maechler <maechler@stat.math.ethz.ch>
+Depends: R(>= 2.10.0), grid
+DependsNote: 'grid' only because 'vcd' *Depends* and fails to work w/ 'Imports' otherwise
+Imports: graphics, lattice, MASS, VIM, mi, mice, Amelia, vcd
 Description: Plots to visualize missing data and datasets that were
         produced by Multiple Imputation. The idea behind this package
         is to visualize MI objects produced by the R packages mi, mice
         or Amelia II to provide a better understanding of the imputed
         data and to evaluate the MI process.
+VersionNote: This has been *archived* on CRAN;
+	     X-CRAN-Comment: Archived on 2015-03-18 at the request of the maintainer.
+  One main problem: 'mi' has changed much, e.g. uses
+  missing_data.frame() instead of mi.data.frame() and exports much less in general
 License: GPL (>= 2)
+
