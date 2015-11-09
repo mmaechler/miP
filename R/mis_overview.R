@@ -3,8 +3,8 @@ mis_overview <-
 {
     abstand=pos
     color=c("lightgreen",rgb(0.85,0,0))
-    tief = dim(ds)[1]
-    breit = dim(ds)[2]
+    tief <- dim(ds)[1]
+    breit <- dim(ds)[2]
     mis_data=rep(0,breit)
     for(i in 1:breit)
     {
@@ -12,7 +12,7 @@ mis_overview <-
     }
         ## Schleife um Anzahl der incomplete cases zu bekommen
     if(inc==TRUE){
-        inc_cases = rep(0,tief)
+        inc_cases <- rep(0,tief)
         for(j in 1:tief)
         {count = 0
             {for (i in 1:breit)
@@ -21,11 +21,11 @@ mis_overview <-
             inc_cases[j] = count
             count
         }}
-    mis_table = matrix(c(tief-mis_data,mis_data),ncol=breit,byrow=TRUE)
-    mis_table = as.table(mis_table)
+    mis_table <- matrix(c(tief-mis_data,mis_data),ncol=breit,byrow=TRUE)
+    mis_table <- as.table(mis_table)
     colnames(mis_table) = names(ds)
     rownames(mis_table) = c("complete","missing")
-    mis_tot_per = sum(mis_data/tief)/breit
+    mis_tot_per <- sum(mis_data/tief)/breit
     if(srt==0)
     {p = barplot(mis_table/tief*100,xlab = "variables",ylab="%", main=paste("Total data missing:",round(mis_tot_per*100,2),"%"),font.main=2, col = color,legend=FALSE,axisnames=TRUE)
         if(percent==TRUE){

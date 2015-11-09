@@ -3,21 +3,21 @@ mi_parcoord <-
 {
     if(class(input) == "mi")
     {
-        data = data.mi(input)
-        m = m(input)
+        data <- data.mi(input)
+        m <- m(input)
     }
     if(class(input) == "mids")
     {
-        data = input$data
-        m = input$m
+        data <- input$data
+        m <- input$m
     }
     if(class(input) == "amelia")
     {
-        data = input$imputations[[1]]
+        data <- input$imputations[[1]]
         data[input$missMatrix] = NA
-        m = input$m
+        m <- input$m
     }
-    breit = dim(data)[2]
+    breit <- dim(data)[2]
     x=0
     if(toString(n)=="all")
     {x = 1:breit}
@@ -25,18 +25,18 @@ mi_parcoord <-
     {
         for(i in 1:length(n))
         {x = c(x,which(names(data)==n[i]))}
-        x = x[-1]
+        x <- x[-1]
     }
 
-    var_nr = which(names(data) == var)
-    mis_obs = which(is.na(data[,var_nr]))
+    var_nr <- which(names(data) == var)
+    mis_obs <- which(is.na(data[,var_nr]))
 
     if(length(nr)==1)
     {
         if(class(input) == "mids"){
-            IMPdata = complete(input, action = nr) }
+            IMPdata <- complete(input, action = nr) }
         if(class(input) == "mi"){
-            IMPdata = mi.data.frame(input, m= nr)	}
+            IMPdata <- mi.data.frame(input, m= nr)	}
         if(class(input) == "amelia"){
             IMPdata=input$imputations[[nr]]}
         parcoord(IMPdata[,x],col="grey",pch=breit)
@@ -49,9 +49,9 @@ mi_parcoord <-
         par(new=TRUE)
         for(i in nr){
             if(class(input) == "mids"){
-                IMPdata = complete(input, action = i)}
+                IMPdata <- complete(input, action = i)}
             if(class(input) == "mi"){
-                IMPdata = mi.data.frame(input, m= i)	}
+                IMPdata <- mi.data.frame(input, m= i)	}
             if(class(input) == "amelia"){
                 IMPdata=input$imputations[[i]]}
             {
