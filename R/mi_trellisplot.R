@@ -1,54 +1,41 @@
 mi_trellisplot <-
-    function(x,var,input,nr=1,eqnr=3,ol=0.1)
+    function(x, var, input, nr = 1, eqnr = 3, ol = 0.1,
+             main = NULL,
+             col = c("blue","red"), pch = 16, font.main = 2, ...)
 {
-    if(class(input) == "mi")
-    {
+    if(inherits(input, "mi")) {
         data <- data.mi(input)
         m <- m(input)
-        IMPdata <- mi.data.frame(input, m= nr)
-    }
-    if(class(input) == "mids")
-    {
+        IMPdata <- mi.data.frame(input, m = nr)
+    } else if(inherits(input, "mids")) {
         data <- input$data
         m <- input$m
         IMPdata <- complete(input, action = nr)
-    }
-    if(class(input) == "amelia")
-    {
+    } else if(inherits(input, "amelia")) {
         data <- input$imputations[[1]]
-        data[input$missMatrix] = NA
+        data[input$missMatrix] <- NA
         m <- input$m
-        IMPdata=input$imputations[[nr]]
-    }
-    tief=dim(data)[1]
-    breit=dim(data)[2]
-    var_nr=which(names(data)==var)
-    x_nr <- 0
-    for(i in 1:length(x))
-    {
-        x_nr=c(x_nr,which(names(data)==x[i])	)
-    }
-    x_nr=x_nr[-1]
-    data$imp = rep("no",tief)
-    data$imp[which(is.na(data[,var_nr]))]="yes"
-    data$imp = factor(data$imp)
-    IMPdata$imp = data$imp
+        IMPdata <- input$imputations[[nr]]
+    } else stop("not implemented for class ", paste(class(input), collapse=", "))
+    stopifnot(is.character(x), length(x) == 2, var %in% (nd <- names(data)))
+    dv <- data[,var]
+    if(any(iv <- is.na(match(x, nd))))
+        stop("invalid variable name(s) in 'x': ", paste(x[iv], collapse=", "))
+    d.imp <- rep("no", length(dv))
+    d.imp[is.na(dv)] <- "yes"
+    IMPdata$imp <- factor(d.imp)
     IMPdata <- IMPdata[,c(x,var,"imp")]
-    if(class(data[,var]) != "factor"){ 
-        group <- equal.count(IMPdata[,var],number=eqnr,overlap=ol)}
-    formel <- x[1]
-    for(i in 2:length(x))
-    {
-        formel <- paste(formel,"~",x[i])
+
+    formel <- paste(x, collapse = " ~ ")
+    if(!is.factor(dv)) {
+        group <- equal.count(IMPdata[,var], number = eqnr, overlap = ol)
+        formel <- paste(formel, "| group")
     }
-    if(class(data[,var]) != "factor")
-    {
-        formel <- paste(formel,"| group")
-    }
-    if(class(data[,var]) == "factor")
-    {
-        formel <- paste(formel,"|",var)
-    }
-    xyplot(as.formula(formel),IMPdata,groups=imp,col=c("blue","red"),pch=16,main=paste(var),font.main=2)
+    else ## is.factor(dv)
+        formel <- paste(formel, "|", var)
+
+    xyplot(as.formula(formel), IMPdata, groups = imp,
+           main = if(is.null(main)) formel else main,
+           col=col, pch=pch, font.main=font.main, ...)
 }
 

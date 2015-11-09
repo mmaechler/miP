@@ -1,9 +1,6 @@
-mi_regplot <-
-    function(input,nr=1,nmis=5)
+mi_regplot <- function(input, nr=1, nmis=5)
 {
-
-    if(class(input) == "mi")
-    {
+    if(inherits(input, "mi")) {
         data <- data.mi(input)
         m <- m(input)
         MIdata <- mi.data.frame(input, m=nr)
@@ -14,19 +11,20 @@ mi_regplot <-
         varliste <- rep(0,breit)
         for(i in 1:breit)
         {
-            if(info.mi(input)[[i]]$nmis>0)
-            {
+            if(info.mi(input)[[i]]$nmis > 0) {
                 nnn <- nnn+1
-                if(info.mi(input)[[i]]$type != "binary" && info.mi(input)[[i]]$type != "unordered-categorical" && info.mi(input)[[i]]$type != "ordered-categorical")
-                {welche_var = c(welche_var,nnn)
-                    varliste[nnn] = names(MIdata)[i]
+                if(info.mi(input)[[i]]$type != "binary" &&
+                   info.mi(input)[[i]]$type != "unordered-categorical" &&
+                   info.mi(input)[[i]]$type != "ordered-categorical") {
+                    welche_var <- c(welche_var, nnn)
+                    varliste[nnn] <- names(MIdata)[i]
                 }
             }
         }
         welche_var <- welche_var[-1]
-    }
-    if(class(input) == "mids")
-    {
+
+    } else if(inherits(input, "mids")) {
+
         data <- input$data
         m <- input$m
         MIdata <- complete(input,action=nr)
@@ -45,7 +43,7 @@ mi_regplot <-
                 if(predic[i,j] == 1 && help ==0)
                 {
                     text <- paste(text, colnames(predic)[j])
-                    varliste[zu] = rownames(predic)[i]
+                    varliste[zu] <- rownames(predic)[i]
                     zu <- zu+1
                     help <- 1
                 }
@@ -54,37 +52,38 @@ mi_regplot <-
                     text <- paste(text,"+", colnames(predic)[j])
                 }
             }
-            methoden[i] = text
+            methoden[i] <- text
         }
         anzahl_mis_var <- length(methoden)
         welche_var <- 1:anzahl_mis_var
-    }
 
+    } else stop("not implemented for class ", paste(class(input), collapse=", "))
 
 #### Eigentliche Funktion:
     t <- length(welche_var)
     par(mfrow=c(ceiling(t/ceiling(sqrt(t))),ceiling(sqrt(t))))
-    for(i in welche_var)
-    {
-        if(class(input) == "mi")
-        {
-            expected <- slot(imp(input)[i][[1]],name="expected")
-            varname <- varliste[i]
-        }
-        if(class(input) == "mids")
-        {
-            cof <- lm.mids(methoden[i],input)[4][[1]][[nr]]
-            expected <- predict(cof,MIdata)
-            varname <- varliste[i]
-        }
-
-        plot(MIdata[which(!is.na(data[,varname])),varname],expected[which(!is.na(data[,varname]))],col = "blue",pch=16,ylab="expected",xlab="observed/imputed",main=paste(varname))
-        lines(lowess(MIdata[which(!is.na(data[,varname])),varname],expected[which(!is.na(data[,varname]))]),col="blue")
-        points(MIdata[which(is.na(data[,varname])),varname],expected[which(is.na(data[,varname]))],col="red",pch=16)
-        if(length(which(is.na(data[,varname])))>nmis){
-            lines(lowess(MIdata[which(is.na(data[,varname])),varname],expected[which(is.na(data[,varname]))]),col="red")}
+    for(i in welche_var) {
+        expected <- if(inherits(input, "mi"))
+                        slot(imp(input)[i][[1]], name="expected")
+                    else if(inherits(input, "mids")) {
+                        cof <- lm.mids(methoden[i],input)[4][[1]][[nr]]
+                        predict(cof, MIdata)
+                    } else stop("invalid 'input' [[should never happen here]]")
+        vn.i <- varliste[i]
+        d.i <- data[, vn.i]
+        ina.i <- is.na(d.i)
+        plot(MIdata[which(!ina.i),vn.i],
+             expected[which(!ina.i)],
+             col = "blue", pch=16, ylab="expected", xlab="observed/imputed",
+             main=paste(vn.i))
+        lines(lowess(MIdata[which(!ina.i),vn.i],
+                     expected[which(!ina.i)]), col="blue")
+        points(MIdata[which(ina.i),vn.i],
+               expected[which(ina.i)],col="red",pch=16)
+        if(length(which(ina.i)) > nmis)
+            lines(lowess(MIdata[which(ina.i),vn.i],
+                         expected[which(ina.i)]),col="red")
         abline(0,1,lty=2)
     }
-
 }
 
