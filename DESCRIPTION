@@ -1,8 +1,8 @@
 Package: miP
 Type: Package
 Title: Multiple Imputation Plots
-Version: 1.1
-Date: 2011-06-06
+Version: 1.1-1
+Date: 2015-11-06
 Author: Paul Brix
 Maintainer: Paul Brix <brixpaul@googlemail.com>
 Depends: R(>= 2.10.0), VIM, mi, mice, Amelia, lattice, vcd
@@ -12,6 +12,3 @@ Description: Plots to visualize missing data and datasets that were
         or Amelia II to provide a better understanding of the imputed
         data and to evaluate the MI process.
 License: GPL (>= 2)
-Packaged: 2012-10-29 08:59:11 UTC; ripley
-Repository: CRAN
-Date/Publication: 2012-10-29 08:59:11
