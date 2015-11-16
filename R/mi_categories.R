@@ -1,4 +1,6 @@
-mi_categories <- function(input,var,sort = FALSE,legend = FALSE) {
+mi_categories <- function(input,var, sort = FALSE, legend = FALSE) {
+    stopifnot(!is.na(sort <- as.logical(sort)),
+              !is.na(legend <- as.logical(legend)))
     if(class(input) == "mi")  ### IMP Liste von mice nachbauen
     {
         data  <- data.mi(input)
@@ -46,11 +48,11 @@ mi_categories <- function(input,var,sort = FALSE,legend = FALSE) {
         }
         name = ""
     }
-    color  <- rainbow(length(levelnames))
-    image(x = 1:nrow(tt),y = 1:ncol(tt),tt, ylab = name, xlab = "Observation",main = var,col = color,axes = TRUE)
-    if(legend == TRUE)
-    {
-        legend("topright",levelnames,pch = 15,col = color,bg = "white",xpd = TRUE)
+    color <- rainbow(length(levelnames))
+    image(x = 1:nrow(tt),y = 1:ncol(tt), tt, ylab = name, xlab = "Observation",
+          main = var, col = color, axes = TRUE)
+    if(legend) {
+        legend("topright", levelnames, pch = 15, col = color, bg = "white", xpd = TRUE)
     }
     ## tt
 }

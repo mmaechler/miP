@@ -10,7 +10,7 @@ mi_marginplot <-
     if(inherits(input, "mi")) {
         ds <- data.mi(input)
         m <- m(input)
-    } else if(inherits(input, "mids")) {
+    } else if(inherits(input, "mids")) { ## mice
         ds <- input$data
         m <- input$m
     } else if(inherits(input, "amelia")) {

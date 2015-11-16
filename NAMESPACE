@@ -1,9 +1,10 @@
-# Export all names
-exportPattern(".")
-
-importFrom("graphics", par, plot, mosaicplot)
-## importFrom("stats", ..........)
-## importFrom("utils", ..........)
+importFrom("grDevices", rainbow, rgb)
+importFrom("graphics",
+           abline, barplot, boxplot, hist, image,
+           legend, lines, mosaicplot,
+           par, plot, points, spineplot, text)
+importFrom("stats", as.formula, density, lowess, predict)
+importFrom("methods", slot)
 
 importFrom("grid", gpar)# not really, but 'vcd' *depends* on grid, so we must too and hence import..
 importFrom("lattice", xyplot, equal.count)
@@ -19,3 +20,7 @@ importFrom("vcd", mosaic)
 import(
   Amelia
 )
+
+# Export all names -- improve
+exportPattern(".")
+
