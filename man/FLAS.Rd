@@ -16,8 +16,8 @@
       with 4 levels ("french", "spanish", "german", "russian").}
     \item{\code{age}}{age group, a two-level \code{\link{factor}} with
       levels \code{"-19"} = less than 20, and  \code{"20+"} = 20 and more.}
-    \item{\code{priC}}{the number of prior foreign language courses as
-      3-level factor w/ levels \code{c("none", "1--2", "3+")}.}
+    \item{\code{priC}}{the number of prior foreign language courses; as
+      a 3-level factor w/ levels \code{c("none", "1--2", "3+")}.}
     \item{\code{sex}}{M=male, F=female.}
     \item{\code{FLAS}}{score on foreign language attitude scale.}
     \item{\code{MLAT}}{Modern Language Aptitude Test, fourth subtest score.}
@@ -26,7 +26,8 @@
     \item{\code{eng}}{score on Penn State English placement exam.}
     \item{\code{HGPA}}{high scool grad point average.}
     \item{\code{CGPA}}{current college grad point average.}
-    \item{\code{grade}}{final grade in foreign language course as binary
+    \item{\code{gradeB}}{final grade in foreign language course as
+      binary (hence the \dQuote{B} in the variable name)
       factor w/ levels \code{"B-"} (B or lower), and \code{"A"}.}
   }
 }
@@ -50,7 +51,7 @@ data(FLAS)
 str(FLAS)
 summary(FLAS) # summary *includes* number of NA's
 
-### The original (2011 `miP`) data "labeling" and coding:
+### The original (2011 `miP` CRAN package) data "labeling" and coding:
 
 ##  1) labeling all factors with integers; this is exactly
 which(iF <- sapply(FLAS, is.factor)) # 1  2  3  4  12
