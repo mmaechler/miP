@@ -51,6 +51,10 @@ data(FLAS)
 str(FLAS)
 summary(FLAS) # summary *includes* number of NA's
 
+## contingency table of three interesting factors -- including NA's
+with(FLAS, table(sex, age, gradeB, useNA = "ifany"))
+
+
 ### The original (2011 `miP` CRAN package) data "labeling" and coding:
 
 ##  1) labeling all factors with integers; this is exactly
