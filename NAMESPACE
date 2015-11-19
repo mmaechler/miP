@@ -1,8 +1,7 @@
 importFrom("grDevices", rainbow, rgb)
 importFrom("graphics",
-           abline, barplot, boxplot, hist, image,
-           legend, lines, mosaicplot,
-           par, plot, points, spineplot, text)
+           abline, barplot, boxplot, hist, image, legend, lines,
+           mosaicplot, par, plot, points, spineplot, text)
 importFrom("stats", as.formula, density, lowess, predict)
 importFrom("methods", slot)
 
